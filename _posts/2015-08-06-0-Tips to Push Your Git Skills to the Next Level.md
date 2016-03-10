@@ -1,5 +1,5 @@
 ---
-date: 2004-10-04 01:49:12+00:00
+date: 2015-08-06 12:49:12+00:00
 layout: post
 title: 10 Tips to Push Your Git Skills to the Next Level
 thread: 166
