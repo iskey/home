@@ -16,16 +16,20 @@ Note: Some commands in this article include part of the command in square bracke
 ###1.  Git Auto Completion
 If you run Git commands through the command line, it’s a tiresome task to type in the commands manually every single time. To help with this, you can enable auto completion of Git commands within a few minutes.
 To get the script, run the following in a Unix system:
+
 ```
 cd ~
 curl https://raw.github.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
 ```
+
 Next, add the following lines to your ~/.bash_profile file:
+
 ```
 if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
 ```
+
 Although I have mentioned this earlier, I can not stress it enough: If you want to use the features of Git fully, you should definitely shift to the command line interface!
 ###2.  Ignoring Files in Git
 Are you tired of compiled files (like .pyc) appearing in your Git repository? Or are you so fed up that you have added them to Git? Look no further, there is a way through which you can tell Git to ignore certain files and directories altogether. Simply create a file with the name .gitignore and list the files and directories that you don’t want Git to track. You can make exceptions using the exclamation mark(!).
@@ -38,10 +42,12 @@ my_db_config/
 !main.pyc
 ###3.  Who Messed With My Code?
 It’s the natural instinct of human beings to blame others when something goes wrong. If your production server is broke, it’s very easy to find out the culprit — just do a git blame. This command shows you the author of every line in a file, the commit that saw the last change in that line, and the timestamp of the commit.
+
 ```
 git blame [file_name]
 git blame demonstration
 ```
+
 And in the screenshot below, you can see how this command would look on a bigger repository:
 
 git blame on the ATutor repository
@@ -137,7 +143,7 @@ Stash list
 
 If you want to un-stash and recover the uncommitted changes, you apply the stash:
 
-git stash apply
+```git stash apply```
 
 In the last screenshot, you can see that each stash has an indentifier, a unique number (although we have only one stash in this case). In case you want to apply only selective stashes, you add the specific identifier to the apply command:
 
@@ -170,7 +176,7 @@ Before cherry pick
 
 I switch to the branch into which I want to cherry-pick the commit, and run the following:
 
-git cherry-pick [commit_hash]
+```git cherry-pick [commit_hash]```
 
 After cherry pick
 
