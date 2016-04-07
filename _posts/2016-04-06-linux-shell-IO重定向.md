@@ -1,5 +1,5 @@
 ---
-date: 2016-04-07 15:36:00+00:00
+date: 2016-04-06 15:36:00+00:00
 layout: post
 title: linux shell I/O重定向
 categories: 脚本
