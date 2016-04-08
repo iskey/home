@@ -8,7 +8,7 @@ tags: kernel netlink
 
 最近需要使用netlink来完成内核层和用户层的通讯，搜集了一个网上的例子，暂时摘抄在此，并计划再接下来再补充一些东西：
 
-- 重写netlink内核实现，把处理函数放在内核线程里。
+> - 重写netlink内核实现，把处理函数放在内核线程里。
 - 使用net_namespace机制下的general netlink接口写一个列子。 
 
 ## 内核代码
