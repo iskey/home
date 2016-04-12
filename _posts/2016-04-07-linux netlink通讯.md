@@ -10,10 +10,11 @@ tags: kernel netlink
 
 **ToDoList:**
 
-> - [X] 重写netlink内核实现，把处理函数放在内核线程里。
+> - [x] 重写netlink内核实现，把处理函数放在内核线程里。
 - [ ] 使用net_namespace机制下的general netlink接口写一个列子。 
 
 # 摘录版本
+---
 
 ## 内核代码
 ```
@@ -231,7 +232,7 @@ int main(int argc, char* argv[])
 ```
 
 # 内核线程版本
-
+---
 ## 内核代码
 ```
 #include <linux/init.h>
