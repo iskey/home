@@ -24,19 +24,18 @@ make menuconfig ARCH=um
 make ARCH=um
 ```
 
-参考：`http://user-mode-linux.sourceforge.net/source.html`
+[参考](http://user-mode-linux.sourceforge.net/source.html)
 
 ### 以-O0编译内核
 
-参考：`http://blog.chinaunix.net/uid-234303-id-2425015.html`
-
+[参考](http://blog.chinaunix.net/uid-234303-id-2425015.html)
  
 
 ## 根文件系统
 
-### [下载现成的根文件系统](http://fs.devloop.org.uk/)
+- [下载现成的根文件系统](http://fs.devloop.org.uk/)
  
-### [制作根文件系统](http://fancymore.com/reading/linux-kernel-debugging.html)
+- [制作根文件系统](http://fancymore.com/reading/linux-kernel-debugging.html)
 
 ## 调试
 
