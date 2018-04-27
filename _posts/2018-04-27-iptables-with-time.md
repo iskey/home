@@ -1,52 +1,44 @@
 ---
 layout: post
-title: "重定向外部连接到本地环回地址"
-date: 2018-04-27 17:12:37 +0800
+title: "iptables时间规则匹配"
+date: 2018-04-27 19:25:48 +0800
 comments: true
 categories: iptables
 ---
 
-背景：在本地`localhost`搭建了一个Httpserver，监听在`4000`端口，现在想通过`eth0`在不改动代码的情况下对外发布服务。
-
-最先想到的就是端口映射，`rinetd`服务，使用也很简单，直接配置外部ip到环回地址的映射就可以了:
-
+1、每天固定时间段匹配
 
 ``` java
-root@lfgphicpra39095:/usr1/# cat /etc/rinetd.conf
-......
-#
-# forwarding rules come here
-#
-# you may specify allow and deny rules after a specific forwarding rule
-# to apply to only that forwarding rule
-#
-# bindadress    bindport  connectaddress  connectport
 
-**10.252.64.154  4000 127.0.0.1 4000**
+iptables -I FORWARD -s 172.17.1.132 -d 192.168.1.119 -m time --timestart 09:40 --timestop 09:59 -j DROP
 
 ```
 
-但是这样一来，一旦eth0的地址发生了改变，就需要再修改配置文件。
-
-
-另一种方法就是通过iptables就行重定向：
+2、按周固定时间段匹配
 
 ```
-iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 4000 -j DNAT --to-destination 127.0.0.1
-```
-
-配置后，外部访问不通，通过抓包分析，协议栈没有回复`syc+ack`报文，看来是路由的问题。
-
-内核协议栈会丢弃路由 对于源地址或目的地址为`loopback`地址的，内核协议栈的认为这是一个`martian packet`，直接丢弃。
+iptables -I FORWARD -s 172.17.1.132 -d 192.168.1.119 -m time --timestart 09:40 --timestop 09:59 --weekdays Wed,Thu -j DROP
 
 ```
-route_localnet – BOOLEAN: Do not consider loopback addresses as martian source or destination while routing. This enables the use of 127/8 for local routing purposes (default FALSE).
+3、按固定日期匹配，注这里比较特殊，可以看见下面的时间是17点不是9点，是因为时区的原因，要差8小时。
 
+```
+iptables -I FORWARD -s 172.17.1.132 -d 192.168.1.119 -m time --datestart 2014-3-19T17:40:08 --datestop 2014-3-19T17:59:50 -j DROP
 
 ```
 
-这个特性是对每个网卡设备生效的，所以只需要在`eth0`上开启环回地址路由就可以了
+附上帮助说明：
 
 ```
-echo 1 > /proc/sys/net/ipv4/conf/eth0/route_localnet
+time match options:
+    --datestart time     Start and stop time, to be given in ISO 8601
+    --datestop time      (YYYY[-MM[-DD[Thh[:mm[:ss]]]]])
+    --timestart time     Start and stop daytime (hh:mm[:ss])
+    --timestop time      (between 00:00:00 and 23:59:59)
+[!] --monthdays value    List of days on which to match, separated by comma
+                         (Possible days: 1 to 31; defaults to all)
+[!] --weekdays value     List of weekdays on which to match, sep. by comma
+                         (Possible days: Mon,Tue,Wed,Thu,Fri,Sat,Sun or 1 to 7
+                         Defaults to all weekdays.)
+    --localtz/--utc      Time is interpreted as UTC/local time
 ```
